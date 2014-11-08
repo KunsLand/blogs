@@ -4,15 +4,15 @@
 
 # Site
 title: Kevin Lee
-subtitle:
+subtitle: I believe that network is everywhere.
 description:
-author: John Doe
+author: Kevin Lee
 email: lee8464@163.com
 language: 
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://kunsland.github.io/
 root: /
 permalink: :year/:month/:day/:title/
 tag_dir: tags
@@ -75,7 +75,6 @@ pagination_dir: page
 
 # Disqus
 disqus_shortname:
-duoshuo_shortname: kevinlee
 
 # Extensions
 ## Plugins: https://github.com/hexojs/hexo/wiki/Plugins
