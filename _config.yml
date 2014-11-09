@@ -76,6 +76,7 @@ pagination_dir: page
 
 # Disqus
 disqus_shortname: keen_lee
+disqus_url: root+permalink
 
 # Extensions
 ## Plugins: https://github.com/hexojs/hexo/wiki/Plugins
