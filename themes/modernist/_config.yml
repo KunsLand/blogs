@@ -1,0 +1,13 @@
+menu:
+  Home: /blogs
+  Archives: /blogs/archives
+  About: /
+rss: #/atom.xml
+
+archive_date_format: MMM DD
+fancybox: true
+
+duoshuo_shortname: kevinlee
+
+google_analytics:
+favicon: /blogs/favicon.ico
