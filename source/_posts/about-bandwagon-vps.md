@@ -4,7 +4,9 @@ tags: [bandwagon, vps, ipv6, gfw]
 ---
 之前一直使用fqrouter2翻墙与Google Play结合使用更新Nexus 5上的应用，直到新年之处（2015年1月中旬）发现fqrouter2不那么好使了，每次打开Google Play，能看到一大堆应用升级提示，但就是下载不了。偶然点进fqrouter2“帮助”（或是“关于”，具体记不清了）里的测试组链接，这个测试组是建在Google Plus上的，里面有大量关于fqrouter2的测试讨论，以及大量的关于翻墙手段的讨论。于是发现了一个名叫Anonymous V的牛人写的[使用Shadowsocks翻墙的教程](https://plus.google.com/103234343779069345365/posts/MLy82ud6wjY)。作者对VPS提供商的比较与选择、Shadowsocks的安装和配置这两大方面进行了详细的说明和指导。最终我结合自己的需求和财力，购买了搬瓦工VPS，搭建了ShadowSocks服务器（简称ss）。今天又花了一点时间弄PC端和手机端的配置，让SS同时支持IPV4和IPV6，速度一般，但已经满足我的需求了。
 
+
 <!-- more -->
+
 
 ### 为什么选择搬瓦工？
 
