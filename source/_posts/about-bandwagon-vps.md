@@ -10,7 +10,7 @@ tags: [bandwagon, vps, ipv6, gfw]
 
 ### 为什么选择搬瓦工？
 
-__便宜__。我选的是Anonymous V提供的4.99美元一年的套餐，HDD: 2.0 GB, RAM: 96 MB, CPU: 1x Intel Xeon, 流量: 200 GB/月，物理地址在西海岸洛杉矶（LA）。
+__便宜__。我选的是Anonymous V提供的4.99美元一年的[套餐](https://bandwagonhost.com/aff.php?aff=1285&pid=20)，HDD: 2.0 GB, RAM: 96 MB, CPU: 1x Intel Xeon, 流量: 200 GB/月，物理地址在西海岸洛杉矶（LA）。
 
 ### 有了VPS能做些什么？
 * 手机、电脑翻墙，同时支持IPV4/IPV6
@@ -94,7 +94,7 @@ route -A inet6 add ::/0 dev tb
 ip -6 route del default dev venet0
 ```
 * 运行`ping6 he.net`，看是否超时，如果超时则配置不成功；如果不断返回数据报响应延迟数据报告，则配置成功。按`Control + C`终止命令。
-* 开机自动添加IPV6隧道脚本，这里的脚本是根据__CHON__博文下面的讨论内容和自己的实践总结出来的。用`vi /etc/rc.local`命令在/etc/rc.local文件中添加如下内容。
+* __开机自动添加IPV6隧道脚本__，这里的脚本是根据__CHON__博文下面的讨论内容和自己的实践总结出来的。用`vi /etc/rc.local`命令在/etc/rc.local文件中添加如下内容。__注意第一行的区别__
 ```
 /root/tb_userspace tb 5.6.7.8 1.2.3.4 sit &
 ifconfig tb up
@@ -106,7 +106,17 @@ ifconfig tb up
 ```
 * 配置VPS的ShadowSocks服务器端，将`/etc/shadowsocks.json`文件中的server对应的ip地址换成`::`，表示任意IP协议的任意地址。
 * 配置ShadowSocks的客户端，将服务器 ip换成2001:a:b:c::2即可，其他不变。
-* 注意以上IP地址要换成自己的IPV6 Tunnel Endpoints地址（[HETB](https://tunnelbroker.net/)->Main Page->[xxxx.ipv6.he.net]->），5.6.7.8为Server IPv4地址，1.2.3.4为Client IPv4地址（即VPS地址），2001:a:b:c::2/64为Server IPV6地址。
+* 注意以上IP地址要换成自己的IPV6 Tunnel Endpoints地址（[HETB](https://tunnelbroker.net/)->Main Page->[xxxx.ipv6.he.net]->），5.6.7.8为Server IPv4地址，1.2.3.4为Client IPv4地址（即VPS地址），2001:a:b:c::2/64为Client IPV6地址。
 
 ### 关于ShadowSocks全局代理
 在勾选全局代理后，PC端的应用大都不会（IE浏览器除外）自动使用代理上网。以QQ为例，需要在登录时设置代理。也可以在网上搜索全局代理的解决方法，我试过Proxifier，感觉速度有影响。
+
+### 让Windows系统更新也走代理
+Windows系统下“全局代理”并不是真正的全局代理，系统更新(Windows Update)并没走SS代理。需要以__管理员身份__执行以下命令：
+```
+netsh winhttp set proxy localhost:1080 "<local>"
+```
+如果不想用代理了，记得重置winhttp：
+```
+netsh winhttp reset proxy
+```
