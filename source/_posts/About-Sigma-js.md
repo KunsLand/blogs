@@ -73,7 +73,7 @@ $ npm start
     * viz: object {color, shape, thickness}
     * atrributes: map
 
-[Sigma]:http://sigma.org/
+[Sigma]:http://sigmajs.org/
 [图]:http://zh.wikipedia.org/wiki/%E5%9B%BE_(%E6%95%B0%E5%AD%A6)
 [Graph]:http://en.wikipedia.org/wiki/Graph_(mathematics)
 [sigma-github源码]:https://github.com/jacomyal/sigma.js
