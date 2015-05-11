@@ -30,14 +30,16 @@ System.out.println("A".getBytes("Unicode").length+"\t"+"一".getBytes("Unicode")
 比较意外的是输出结果是4而非2，这又是为什么呢？难道Java中的Unicode是4个字节编码的？
 先别急，我们再多测几个例子：
 ```
-System.out.println("AB".getBytes("Unicode").length+"\t"+"二三四".getBytes("Unicode").length);
-System.out.println("ABC".getBytes("Unicode").length+"\t"+"二三四".getBytes("Unicode").length);
-System.out.println("ABCD".getBytes("Unicode").length+"\t"+"二三四".getBytes("Unicode").length);
+System.out.println("AB".getBytes("Unicode").length+"\t"+"一二".getBytes("Unicode").length);
+System.out.println("ABC".getBytes("Unicode").length+"\t"+"一二三".getBytes("Unicode").length);
+System.out.println("ABCD".getBytes("Unicode").length+"\t"+"一二三四".getBytes("Unicode").length);
+System.out.println("".getBytes("Unicode").length);
 6	6
 8	8
 10	10
+0
 ```
-4，6，8，10，……等差数列！f(n)=2*n+2?!
+4，6，8，10，……等差数列！f(n)=2*n+2?!(n>=1),f(0)=0
 那么问题来了，多出来的两个字节是干什么的呢？
 ### 关于Unicode、UTF-8、UTF-16
 网上搜罗一大筐后，综合[阮一峰](http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html)和[殇雲](http://blog.csdn.net/tianjf0514/article/details/7854624)的博客、[维基百科UTF-8](http://zh.wikipedia.org/wiki/UTF-8)、[维基百科Unicode](http://zh.wikipedia.org/wiki/Unicode)、[维基百科UTF-16](http://zh.wikipedia.org/wiki/UTF-16)，终于理清了Unicode与UTF-8、UTF-16之间的关系，也对编码有了更深的理解。
