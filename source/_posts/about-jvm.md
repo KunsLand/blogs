@@ -41,7 +41,7 @@ tags: [Java, JVM]
 # Garbage Collection
 ![GC Tuning in JVM](/blogs/img/about-jvm-gc-tuning.png)
 图片来源[Java SE 6 GC Tuning](http://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html)，未找到Java 7相关的资料，官方只有简单的[介绍](http://docs.oracle.com/javase/7/docs/technotes/guides/vm/)。
-垃圾回收是针对堆和方法区来讲的，主要思想是：内存快用完了，清除那些没用的对象吧。回收的算法有很多种，如
+垃圾回收是针对堆和方法区来讲的，主要思想是：内存快用完了，清除那些没用的对象吧。回收的算法有很多种，如（一下方法来自[Inside the Java 2 Virtual Machine 2nd Edition](http://www.artima.com/insidejvm/ed2/jvm9.html)）：
 * 引用计数法
 * 轨迹跟踪法
 * 压缩拷贝法
