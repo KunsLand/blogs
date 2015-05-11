@@ -39,6 +39,8 @@ tags: [Java, JVM]
 上图为JVM中调用Java方法与本地方法之间的区别与联系，图片来源：[Inside the Java 2 Virtual Machine 2nd Edition](http://www.artima.com/insidejvm/ed2/jvm9.html)
 
 # Garbage Collection
+![GC Tuning in JVM](/blogs/img/about-jvm-gc-tuning.png)
+图片来源[Java SE 6 GC Tuning](http://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html)，未找到Java 7相关的资料，官方只有简单的[介绍](http://docs.oracle.com/javase/7/docs/technotes/guides/vm/)。
 垃圾回收是针对堆和方法区来讲的，主要思想是：内存快用完了，清除那些没用的对象吧。回收的算法有很多种，如
 * 引用计数法
 * 轨迹跟踪法
@@ -47,7 +49,7 @@ tags: [Java, JVM]
 * 自适应法
 * 火车法
 
-不同的JVM实现可能会采用不同的方法，下图是一种流行的停止-拷贝法，对堆区的整理方式分三个层级：
+不同的JVM实现可能会采用不同的方法，下图是一种流行的停止-拷贝法，对堆区的整理方式分三个层级，详细参阅[Java SE 6 GC Tuning](http://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html)或[Java SE 8 GC Tuning](http://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/index.html)：
 * Eden Pool是新生代，满了之后将垃圾清空留下来的存入Survivor Pool存活区
 * Survivor Pool是存活区，每次有新的对象进入，原有的存活对象年龄加1，满了之后将年龄超过一定限度的放入Tenured Pool终身存活区。
 * Tenured Pool终身存活区，满了之后运行GC清空无用对象。
