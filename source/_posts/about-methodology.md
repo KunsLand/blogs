@@ -7,3 +7,4 @@ tags: [Methodology, Principle]
 * __Solve by yourself__. Just do it when you finally get a solution. When you meet new troubles, go to step one.
 
 __The best way is to be prepared before the bad things occurs.__ Asking questions, searching and researching beforehand are never worthless.
+__Never give up untill last second.__
