@@ -10,6 +10,8 @@ These challenges are copied from a book *Learn More, Study Less* written by Scot
 * User finger as a pointer on all written material on paper.
 * Practice active reading once a week.
 
+<!-- more -->
+
 ## 2. Practice flow-based notetaking for two weeks.
 
 ## 3. Improve the ability with using metaphors to understand and remember abstract ideas.
