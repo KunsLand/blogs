@@ -8,28 +8,28 @@ tags: [CPP]
 
 ### Data Layout
 一般视图：
-![Plain](/blogs/img/plain.png)
+![Plain](/blogs/img/plain.PNG)
 
 带字节对齐的视图：
-![Alignment](/blogs/img/alignment.png)
+![Alignment](/blogs/img/alignment.PNG)
 
 继承视图：
-![Inheritance](/blogs/img/inheritance.png)
+![Inheritance](/blogs/img/inheritance.PNG)
 
 组合视图：
-![Object in object](/blogs/img/inheritance-2.png)
+![Object in object](/blogs/img/inheritance-2.PNG)
 
 带虚函数的一般视图：
-![Common implementation I](/blogs/img/impl-common-data.png)
+![Common implementation I](/blogs/img/impl-common-data.PNG)
 
 另一种带虚函数的一般试图：
-![Common implementation II](/blogs/img/impl-common-data-2.png)
+![Common implementation II](/blogs/img/impl-common-data-2.PNG)
 
 g++视图：
-![Linux g++ implementation](/blogs/img/impl-linux-gplusplus-data.png)
+![Linux g++ implementation](/blogs/img/impl-linux-gplusplus-data.PNG)
 
 多虚继承：
-![Chaotic](/blogs/img/chaotic-evil.png)
+![Chaotic](/blogs/img/chaotic-evil.PNG)
 
 ### Virtual/Static Binding
 * __虚绑定(Virtual Binding)__：指向某一对象的指针或引用调用虚函数就是虚绑定。
@@ -37,9 +37,9 @@ g++视图：
 
 ### Type info
 MSVC视图：
-![MSVC implementation](/blogs/img/impl-msvc.png)
+![MSVC implementation](/blogs/img/impl-msvc.PNG)
 Linux g++ 视图：
-![Linux g++ implementation](/blogs/img/impl-linux-gplusplus.png)
+![Linux g++ implementation](/blogs/img/impl-linux-gplusplus.PNG)
 
 ### 构造顺序
 虚基类->基类->虚指针(vptr)->不再初始化列表中的对象->初始化列表中的对象->构造器。
