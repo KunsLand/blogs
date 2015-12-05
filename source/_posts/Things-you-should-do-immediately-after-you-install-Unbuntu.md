@@ -23,6 +23,7 @@ sudo apt-get update
 sudo apt-get upgrade
 ```
 
+
 # 装Chrome浏览器
 Ubuntu下装Chrome比在Windows下装更容易，两步即可：下载软件包，双击安装。
 下载x86版本：
@@ -35,6 +36,7 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 ```
 这里不用管具体的Chrome版本，因为stable_current就是“当前稳定版”的意思。
 之所以装Chrome，是因为Chrome的书签管理、插件、审查元素等相关的用户习惯已经基本养成，不想再花时间在这些上面，Chrome的账户同步（包括插件和书签，以及一些基本设置）也是特别贴心。
+
 
 # OpenVPN
 之前写过一片博文讲[如何使用VPS和OpenVPN进行翻墙](http://kunsland.github.io/blogs/2015/03/22/vps-openvpn/)。这里就只讲客户端的安装，Ubuntu下安装OpenVPN不用翻墙，只需一个命令就行：
@@ -53,6 +55,7 @@ sudo vi /etc/default/openvpn
 ```
 根据该文件注释的前几行的介绍，自启动有两种方式设置:一是去掉`AUTOSTART="all"`前的注释符号`#`；二是添加一行`AUTOSTART="xxx"`，这里xxx需要替换为你的.conf文件名，不加文件后缀。
 
+
 # 远程软件Remmina
 Ubuntu自带Remmina，但是在远程时不能远程声音，所以要对Remmina进行更新，可以参见[官方Wiki](https://github.com/FreeRDP/Remmina/wiki)。
 具体操作如下：
@@ -61,6 +64,8 @@ sudo apt-add-repository ppa:remmina-ppa-team/remmina-next
 sudo apt-get update
 sudo apt-get install remmina remmina-plugin-rdp libfreerdp-plugins-standard
 ```
+
+
 # Ubuntu下的中文输入法
 我使用Ubuntu的还有一条原则是英文优先，所以系统的所有提示都是英文显示。但工作生活中免不了要使用中文，所以需要装中文输入法。选来选取最后还是用了搜狗输入法。比较好的是搜狗输入法有专门的[Linux版本](http://pinyin.sogou.com/linux/)，并且还在更新当中。不过安装过程稍微有些折腾。首先是从官网下载deb安装包，双击即可安装。但是安装完之后还需要一定配置才能使用。
 * 在将键盘输入法的系统从iBus改为fcitx（Language Support->Language->Keyboard input method system）
@@ -81,6 +86,7 @@ sudo vi /etc/default/locale
 ```
 这样配置可以解决搜狗输入法在Emacs中失效和热键冲突两个问题。
 
+
 # Node.js
 推荐如下安装方法：
 ```
@@ -88,6 +94,7 @@ sudo apt-get install nodejs
 sudo apt-get install npm
 ln -s /usr/bin/nodejs /usr/bin/node
 ```
+
 
 # git
 ```
@@ -97,6 +104,7 @@ git config --global user.email="xx@ss.yy.com"
 ssh-keygen -t rsa -b 4096 -C "xx@ss.yy.com"
 ```
 更多查看[git官方文档](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration)以及[github官方文档](https://help.github.com/articles/generating-ssh-keys/)。
+
 
 # Emacs
 准备工作
@@ -130,6 +138,7 @@ Name=New Window
 TargetEnvironment=Unity
 ```
 Emacs使用说明书，参见[Emacs官网](http://www.gnu.org/software/emacs/manual/emacs.html)。
+
 
 # Latex
 ```
