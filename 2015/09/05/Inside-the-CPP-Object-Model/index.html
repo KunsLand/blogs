@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Inside the C++ Object Model | Kevin Lee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="Kevin Lee">
+  
+  
+    <meta name="description" content="经常遇到有关C++的奇怪问题，而且常常不是什么难题，但是就是觉得一团糟。偶然接触到C++对象模型的概念，挖掘出一本经典的书籍Inside the C++ Object Model，虽然年代久远，书中也有多处明显错误，但瑕不掩瑜，仔细品读，还是有茅塞顿开的感觉。参考shifan的总结，我将部分关键的图片罗列出来，以便以后查阅。">
+  
+  <meta name="description" content="经常遇到有关C++的奇怪问题，而且常常不是什么难题，但是就是觉得一团糟。偶然接触到C++对象模型的概念，挖掘出一本经典的书籍Inside the C++ Object Model，虽然年代久远，书中也有多处明显错误，但瑕不掩瑜，仔细品读，还是有茅塞顿开的感觉。参考shifan的总结，我将部分关键的图片罗列出来，以便以后查阅。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Inside the C++ Object Model">
+<meta property="og:url" content="http://kunsland.github.io/blogs/2015/09/05/Inside-the-CPP-Object-Model/index.html">
+<meta property="og:site_name" content="Kevin Lee">
+<meta property="og:description" content="经常遇到有关C++的奇怪问题，而且常常不是什么难题，但是就是觉得一团糟。偶然接触到C++对象模型的概念，挖掘出一本经典的书籍Inside the C++ Object Model，虽然年代久远，书中也有多处明显错误，但瑕不掩瑜，仔细品读，还是有茅塞顿开的感觉。参考shifan的总结，我将部分关键的图片罗列出来，以便以后查阅。">
+<meta property="og:image" content="http://kunsland.github.io/blogs/blogs/img/plain.PNG">
+<meta property="og:image" content="http://kunsland.github.io/blogs/blogs/img/alignment.PNG">
+<meta property="og:image" content="http://kunsland.github.io/blogs/blogs/img/inheritance.PNG">
+<meta property="og:image" content="http://kunsland.github.io/blogs/blogs/img/inheritance-2.PNG">
+<meta property="og:image" content="http://kunsland.github.io/blogs/blogs/img/impl-common-data.PNG">
+<meta property="og:image" content="http://kunsland.github.io/blogs/blogs/img/impl-common-data-2.PNG">
+<meta property="og:image" content="http://kunsland.github.io/blogs/blogs/img/impl-linux-gplusplus-data.PNG">
+<meta property="og:image" content="http://kunsland.github.io/blogs/blogs/img/chaotic-evil.PNG">
+<meta property="og:image" content="http://kunsland.github.io/blogs/blogs/img/impl-msvc.PNG">
+<meta property="og:image" content="http://kunsland.github.io/blogs/blogs/img/impl-linux-gplusplus.PNG">
+<meta property="og:updated_time" content="2015-12-04T04:21:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Inside the C++ Object Model">
+<meta name="twitter:description" content="经常遇到有关C++的奇怪问题，而且常常不是什么难题，但是就是觉得一团糟。偶然接触到C++对象模型的概念，挖掘出一本经典的书籍Inside the C++ Object Model，虽然年代久远，书中也有多处明显错误，但瑕不掩瑜，仔细品读，还是有茅塞顿开的感觉。参考shifan的总结，我将部分关键的图片罗列出来，以便以后查阅。">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/blogs/favicon.ico">
+  
+  <link rel="stylesheet" href="/blogs/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/blogs/">Kevin Lee</a></h1>
+    <p><a href="/blogs/">Everything in the world is mutual connected.</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/blogs">Home</a></li>
+      
+        <li><a href="/blogs/archives">Archives</a></li>
+      
+        <li><a href="/">About</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/blogs/2015/09/05/Inside-the-CPP-Object-Model/">
+  <time datetime="2015-09-05T11:38:39.000Z">
+    Sep 5 2015
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Inside the C++ Object Model</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>经常遇到有关C++的奇怪问题，而且常常不是什么难题，但是就是觉得一团糟。偶然接触到C++对象模型的概念，挖掘出一本经典的书籍<a href="http://read.pudn.com/downloads120/ebook/511418/inside.the.c%2B%2B.object.model.pdf" target="_blank" rel="external">Inside the C++ Object Model</a>，虽然年代久远，书中也有多处明显错误，但瑕不掩瑜，仔细品读，还是有茅塞顿开的感觉。参考<a href="http://lifegoo.pluskid.org/upload/doc/object_models/C++%20Object%20Model.pdf" target="_blank" rel="external">shifan</a>的总结，我将部分关键的图片罗列出来，以便以后查阅。</p>
+<a id="more"></a>
+<h3 id="Data_Layout">Data Layout</h3><p>一般视图：<br><img src="/blogs/img/plain.PNG" alt="Plain"></p>
+<p>带字节对齐的视图：<br><img src="/blogs/img/alignment.PNG" alt="Alignment"></p>
+<p>继承视图：<br><img src="/blogs/img/inheritance.PNG" alt="Inheritance"></p>
+<p>组合视图：<br><img src="/blogs/img/inheritance-2.PNG" alt="Object in object"></p>
+<p>带虚函数的一般视图：<br><img src="/blogs/img/impl-common-data.PNG" alt="Common implementation I"></p>
+<p>另一种带虚函数的一般试图：<br><img src="/blogs/img/impl-common-data-2.PNG" alt="Common implementation II"></p>
+<p>g++视图：<br><img src="/blogs/img/impl-linux-gplusplus-data.PNG" alt="Linux g++ implementation"></p>
+<p>多虚继承：<br><img src="/blogs/img/chaotic-evil.PNG" alt="Chaotic"></p>
+<h3 id="Virtual/Static_Binding">Virtual/Static Binding</h3><ul>
+<li><strong>虚绑定(Virtual Binding)</strong>：指向某一对象的指针或引用调用虚函数就是虚绑定。</li>
+<li><strong>静态绑定(Static Binding)</strong>：指向某一对象的指针或引用，或是对象本身，调用任何非虚函数就是静态绑定。</li>
+</ul>
+<h3 id="Type_info">Type info</h3><p>MSVC视图：<br><img src="/blogs/img/impl-msvc.PNG" alt="MSVC implementation"><br>Linux g++ 视图：<br><img src="/blogs/img/impl-linux-gplusplus.PNG" alt="Linux g++ implementation"></p>
+<h3 id="构造顺序">构造顺序</h3><p>虚基类-&gt;基类-&gt;虚指针(vptr)-&gt;不再初始化列表中的对象-&gt;初始化列表中的对象-&gt;构造器。</p>
+<ul>
+<li>虚指针(vptr)沿着继承树不断被替换。</li>
+<li>不论是静态绑定还是动态绑定，虚函数都会在构造完成前失去虚特性（virtuousness）。</li>
+</ul>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+  <div class="tags">
+    <a class="tags-link" href="/blogs/tags/CPP/">CPP</a>
+  </div>
+
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">评论</h1>
+  <div class="ds-thread" data-title="Inside the C++ Object Model">
+  </div>
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2015 <a href="http://kunsland.github.io">Kevin Lee</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://kunsland.github.io" target="_blank">Kevin Lee</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/blogs/js/scale.fix.js"></script>
+<script src="/blogs/js/jquery.imagesloaded.min.js"></script>
+<script src="/blogs/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'kevinlee' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/blogs/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/blogs/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

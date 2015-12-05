@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Java字符编码与Unicode字符集 | Kevin Lee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="Kevin Lee">
+  
+  
+    <meta name="description" content="昨天某人问我Java中如下代码的输出结果为什么不一样（”A”为1，”一”为2）？1System.out.println(&amp;#34;A&amp;#34;.getBytes().length+&amp;#34;\t&amp;#34;+&amp;#34;&amp;#19968;&amp;#34;.getBytes().length);&amp;#10;1&amp;#9;2
+咋一看，好像是不对劲，Java中的字符不都是Unicode编码（16bit，2字节）的吗？怎么">
+  
+  <meta name="description" content="昨天某人问我Java中如下代码的输出结果为什么不一样（”A”为1，”一”为2）？1System.out.println(&amp;#34;A&amp;#34;.getBytes().length+&amp;#34;\t&amp;#34;+&amp;#34;&amp;#19968;&amp;#34;.getBytes().length);&amp;#10;1&amp;#9;2
+咋一看，好像是不对劲，Java中的字符不都是Unicode编码（16bit，2字节）的吗？怎么">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java字符编码与Unicode字符集">
+<meta property="og:url" content="http://kunsland.github.io/blogs/2015/03/11/about-unicode-or-more/index.html">
+<meta property="og:site_name" content="Kevin Lee">
+<meta property="og:description" content="昨天某人问我Java中如下代码的输出结果为什么不一样（”A”为1，”一”为2）？1System.out.println(&amp;#34;A&amp;#34;.getBytes().length+&amp;#34;\t&amp;#34;+&amp;#34;&amp;#19968;&amp;#34;.getBytes().length);&amp;#10;1&amp;#9;2
+咋一看，好像是不对劲，Java中的字符不都是Unicode编码（16bit，2字节）的吗？怎么">
+<meta property="og:updated_time" content="2015-12-04T04:21:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java字符编码与Unicode字符集">
+<meta name="twitter:description" content="昨天某人问我Java中如下代码的输出结果为什么不一样（”A”为1，”一”为2）？1System.out.println(&amp;#34;A&amp;#34;.getBytes().length+&amp;#34;\t&amp;#34;+&amp;#34;&amp;#19968;&amp;#34;.getBytes().length);&amp;#10;1&amp;#9;2
+咋一看，好像是不对劲，Java中的字符不都是Unicode编码（16bit，2字节）的吗？怎么">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/blogs/favicon.ico">
+  
+  <link rel="stylesheet" href="/blogs/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/blogs/">Kevin Lee</a></h1>
+    <p><a href="/blogs/">Everything in the world is mutual connected.</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/blogs">Home</a></li>
+      
+        <li><a href="/blogs/archives">Archives</a></li>
+      
+        <li><a href="/">About</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/blogs/2015/03/11/about-unicode-or-more/">
+  <time datetime="2015-03-11T13:30:12.000Z">
+    Mar 11 2015
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Java字符编码与Unicode字符集</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>昨天某人问我Java中如下代码的输出结果为什么不一样（”A”为1，”一”为2）？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&#34;A&#34;.getBytes().length+&#34;\t&#34;+&#34;&#19968;&#34;.getBytes().length);&#10;1&#9;2</span><br></pre></td></tr></table></figure></p>
+<p>咋一看，好像是不对劲，Java中的字符不都是Unicode编码（16bit，2字节）的吗？怎么英文字母只占1字节呢？于是立马查看《Java编程思想（Thinking in Java）第四版》，关于常用类型的基本信息表（见“第二章-一切都是对象”，“2.2.2-特例：基本类型”，第23页）里赫然写着char的大小为16bit的Unicode。于是断定问题出在getBytes函数上。</p>
+<a id="more"></a>
+<h3 id="Java中String的getBytes方法">Java中String的getBytes方法</h3><p>Java 7中关于String的<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html#getBytes(" target="_blank" rel="external">getBytes()</a>方法，括号中不指定任何编码格式，该方法将自动使用平台（系统）默认的编码格式。倘若指定编码格式，例如常见的<a href="http://en.wikipedia.org/wiki/GBK" target="_blank" rel="external">GBK</a>，<a href="http://en.wikipedia.org/wiki/GB_2312" target="_blank" rel="external">GB2312</a>，<a href="http://en.wikipedia.org/wiki/UTF-8" target="_blank" rel="external">UTF-8</a>，将会出现下面的结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&#34;A&#34;.getBytes(&#34;GBK&#34;).length+&#34;\t&#34;+&#34;&#19968;&#34;.getBytes(&#34;GBK&#34;).length);&#10;System.out.println(&#34;A&#34;.getBytes(&#34;GB2312&#34;).length+&#34;\t&#34;+&#34;&#19968;&#34;.getBytes(&#34;GB2312&#34;).length);&#10;System.out.println(&#34;A&#34;.getBytes(&#34;UTF-8&#34;).length+&#34;\t&#34;+&#34;&#19968;&#34;.getBytes(&#34;UTF-8&#34;).length);&#10;1&#9;2&#10;1&#9;2&#10;1&#9;3</span><br></pre></td></tr></table></figure></p>
+<p>很明显，系统默认的编码是GBK或GB2312，而不是UTF-8，更不是统统占2字节Unicode。那么Java中的Unicode是怎么样的呢？<br>Java中如果要让getBytes函数按照占两个字节的Unicode进行编码，可以按照如下方式强制执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&#34;A&#34;.getBytes(&#34;Unicode&#34;).length+&#34;\t&#34;+&#34;&#19968;&#34;.getBytes(&#34;Unicode&#34;).length);&#10;4&#9;4</span><br></pre></td></tr></table></figure></p>
+<p>比较意外的是输出结果是4而非2，这又是为什么呢？难道Java中的Unicode是4个字节编码的？<br>先别急，我们再多测几个例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&#34;AB&#34;.getBytes(&#34;Unicode&#34;).length+&#34;\t&#34;+&#34;&#19968;&#20108;&#34;.getBytes(&#34;Unicode&#34;).length);&#10;System.out.println(&#34;ABC&#34;.getBytes(&#34;Unicode&#34;).length+&#34;\t&#34;+&#34;&#19968;&#20108;&#19977;&#34;.getBytes(&#34;Unicode&#34;).length);&#10;System.out.println(&#34;ABCD&#34;.getBytes(&#34;Unicode&#34;).length+&#34;\t&#34;+&#34;&#19968;&#20108;&#19977;&#22235;&#34;.getBytes(&#34;Unicode&#34;).length);&#10;System.out.println(&#34;&#34;.getBytes(&#34;Unicode&#34;).length);&#10;6&#9;6&#10;8&#9;8&#10;10&#9;10&#10;0</span><br></pre></td></tr></table></figure></p>
+<p>4，6，8，10，……等差数列！f(n)=2*n+2?!(n&gt;=1),f(0)=0<br>那么问题来了，多出来的两个字节是干什么的呢？</p>
+<h3 id="关于Unicode、UTF-8、UTF-16">关于Unicode、UTF-8、UTF-16</h3><p>网上搜罗一大筐后，综合<a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank" rel="external">阮一峰</a>和<a href="http://blog.csdn.net/tianjf0514/article/details/7854624" target="_blank" rel="external">殇雲</a>的博客、<a href="http://zh.wikipedia.org/wiki/UTF-8" target="_blank" rel="external">维基百科UTF-8</a>、<a href="http://zh.wikipedia.org/wiki/Unicode" target="_blank" rel="external">维基百科Unicode</a>、<a href="http://zh.wikipedia.org/wiki/UTF-16" target="_blank" rel="external">维基百科UTF-16</a>，终于理清了Unicode与UTF-8、UTF-16之间的关系，也对编码有了更深的理解。<br>编码的目的是要实现将人类所使用的文字（字母、象形文字等）转换成计算机所能理解的二进制，<strong>编码的过程则分两个步骤</strong>：</p>
+<ul>
+<li><strong>文字-&gt;数字</strong>：搜罗世界各国的语言文字，给每个文字进行编号，每个文字对应一个唯一确定的十进制数，统一或者规范每个文字占用的字节数；这里涉及到的是<strong>国际标准和规范</strong>的问题；</li>
+<li><strong>数字-&gt;二进制</strong>：将数字编号转换成最终的二进制序列（由0和1组成的序列），并按照特定的方式存入计算机存储结构（内存、硬盘等）；这里涉及到的是对国际标准和规范的<strong>具体算法实现</strong>；</li>
+</ul>
+<p>Unicode实际上只能算是国际标准，不能说是编码方案。UTF-8和UTF-16都是对Unicode标准的具体实现方案，区别在于UTF-8是不定长的（最多4字节），UTF-16是定长的2字节。两个字节就存在高低位之分（高位字节放前/大端/BigEndian和低位字节放前/小端/LittleEndian），针对不同的二进制存放方式，<strong>UTF-16编码方案将在字符串前端的额外添加两个字节中指定字节的存放方式（FE FF对应大端，FF FE对应小端）</strong>。上面的Java实验中，UTF-8对英文编码时就只有1个字节长，而对中文编码时就有3个字节长。而Java中实现Unicode标准时采用的是UTF-16BE（大端）方案，因此不管是英文还是中文，最终的字节数为<strong>字符数的两倍+2</strong>，这就是为什么上面最后一个实验多出两个字节的原因。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+  <div class="tags">
+    <a class="tags-link" href="/blogs/tags/Java/">Java</a>, <a class="tags-link" href="/blogs/tags/Unicode/">Unicode</a>
+  </div>
+
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">评论</h1>
+  <div class="ds-thread" data-title="Java字符编码与Unicode字符集">
+  </div>
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2015 <a href="http://kunsland.github.io">Kevin Lee</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://kunsland.github.io" target="_blank">Kevin Lee</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/blogs/js/scale.fix.js"></script>
+<script src="/blogs/js/jquery.imagesloaded.min.js"></script>
+<script src="/blogs/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'kevinlee' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/blogs/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/blogs/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

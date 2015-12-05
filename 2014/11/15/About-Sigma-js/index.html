@@ -1,0 +1,203 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>使用Sigma.js库在Web页面画网络图 | Kevin Lee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="Kevin Lee">
+  
+  
+    <meta name="description" content="#SigmaSigma是用来画图(Graph)的开源JavaScript库（sigma-github源码，sigma历史版本），用它可以很方便的在Web页面中画网络图。">
+  
+  <meta name="description" content="#SigmaSigma是用来画图(Graph)的开源JavaScript库（sigma-github源码，sigma历史版本），用它可以很方便的在Web页面中画网络图。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Sigma.js库在Web页面画网络图">
+<meta property="og:url" content="http://kunsland.github.io/blogs/2014/11/15/About-Sigma-js/index.html">
+<meta property="og:site_name" content="Kevin Lee">
+<meta property="og:description" content="#SigmaSigma是用来画图(Graph)的开源JavaScript库（sigma-github源码，sigma历史版本），用它可以很方便的在Web页面中画网络图。">
+<meta property="og:updated_time" content="2015-12-04T04:21:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Sigma.js库在Web页面画网络图">
+<meta name="twitter:description" content="#SigmaSigma是用来画图(Graph)的开源JavaScript库（sigma-github源码，sigma历史版本），用它可以很方便的在Web页面中画网络图。">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/blogs/favicon.ico">
+  
+  <link rel="stylesheet" href="/blogs/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/blogs/">Kevin Lee</a></h1>
+    <p><a href="/blogs/">Everything in the world is mutual connected.</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/blogs">Home</a></li>
+      
+        <li><a href="/blogs/archives">Archives</a></li>
+      
+        <li><a href="/">About</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/blogs/2014/11/15/About-Sigma-js/">
+  <time datetime="2014-11-15T12:28:34.000Z">
+    Nov 15 2014
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">使用Sigma.js库在Web页面画网络图</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>#Sigma<br><strong><a href="http://sigmajs.org/" target="_blank" rel="external">Sigma</a></strong>是用来画<em><a href="http://zh.wikipedia.org/wiki/%E5%9B%BE_(%E6%95%B0%E5%AD%A6)" target="_blank" rel="external">图</a></em>(<em><a href="http://en.wikipedia.org/wiki/Graph_(mathematics)" target="_blank" rel="external">Graph</a></em>)的开源JavaScript库（<a href="https://github.com/jacomyal/sigma.js" target="_blank" rel="external">sigma-github源码</a>，<a href="https://github.com/jacomyal/sigma.js/releases/" target="_blank" rel="external">sigma历史版本</a>），用它可以很方便的在<em>Web页面</em>中画<strong>网络图</strong>。</p>
+<a id="more"></a>
+<h3 id="自己Build最新版本">自己Build最新版本</h3><p>由于是开源的，不时有新的代码更新，这些更新一般是bug修复，但作者的发布周期较长，所以需要自己build导出sigma库，以保证不会出现各种奇奇怪怪的bug。<a href="https://github.com/jacomyal/sigma.js" target="_blank" rel="external">sigma-github源码</a>首页已经说了怎么build，步骤大致如下：</p>
+<ul>
+<li><p>下载sigma源码（不会用git的可以直接下载<a href="https://github.com/jacomyal/sigma.js/archive/master.zip" target="_blank" rel="external">zip文件</a>并解压出sigma.js文件夹）:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone git@github.com:jacomyal/sigma.js.git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装<a href="http://nodejs.org/download/" target="_blank" rel="external">node.js</a>;</p>
+</li>
+<li>安装<a href="https://developers.google.com/closure/utilities/docs/linter_howto?hl=en" target="_blank" rel="external">gjslint</a>，步骤大致如下：<ol>
+<li>安装<a href="https://www.python.org/downloads/" target="_blank" rel="external">python</a>，最好下2.7版本;</li>
+<li>安装<a href="https://pypi.python.org/pypi/setuptools#installation-instructions" target="_blank" rel="external">easy_install</a>(windows下直接下载并运行<a href="https://bootstrap.pypa.io/ez_setup.py" target="_blank" rel="external">ez_setup.py</a>，最后添加<strong>python安装目录下的scripts路径</strong>到系统Path环境变量);</li>
+<li>运行如下命令:  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ easy_install http://closure-linter.googlecode.com/files/closure_linter-latest.tar.gz  &#10;```  &#10;* &#22312;sigma.js&#36335;&#24452;&#19979;&#25191;&#34892;&#22914;&#19979;&#21629;&#20196;&#36827;&#34892;build&#65292;&#26368;&#32456;&#30340;js&#25991;&#20214;&#20250;&#20445;&#23384;&#22312;`build`&#25991;&#20214;&#22841;&#19979;&#65306;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+<p>$ npm install<br>$ npm run build<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`build`&#25991;&#20214;&#22841;&#26368;&#32456;&#21253;&#21547;&#19968;&#20010;`plugins`&#25991;&#20214;&#22841;&#21644;&#20004;&#20010;js&#25991;&#20214;(`sigma.min.js`&#21644;`sigma.require.js`&#25991;&#20214;)&#65292;&#26377;&#29992;&#30340;&#21482;&#26159;`plugins`&#25991;&#20214;&#22841;&#21644;`sigma.min.js`&#25991;&#20214;&#12290;&#10;&#10;### &#36816;&#34892;&#26679;&#20363;&#10;&#28304;&#30721;&#21253;&#19979;&#30340;`examples`&#25991;&#20214;&#22841;&#21253;&#21547;&#20102;&#24456;&#22810;&#20363;&#23376;&#65292;&#22823;&#37096;&#20998;&#20363;&#23376;&#30452;&#25509;&#28857;&#24320;&#23601;&#21487;&#20197;&#22312;&#27983;&#35272;&#22120;&#20013;&#26597;&#30475;&#12290;&#23569;&#25968;&#28041;&#21450;__&#20351;&#29992;&#33050;&#26412;&#35835;&#21462;&#25991;&#20214;__&#30340;&#20363;&#23376;&#38656;&#35201;__&#36816;&#34892;&#26412;&#22320;&#26381;&#21153;&#22120;__(&#20351;&#29992;&#30340;&#26159;node.js&#24179;&#21488;&#26694;&#26550;&#65292;&#38656;&#35201;&#23433;&#35013;[node.js])&#65292;&#22312;`sigma.js`&#36335;&#24452;&#19979;&#25191;&#34892;&#22914;&#19979;&#21629;&#20196;&#65288;&#31532;&#19968;&#26465;&#21629;&#20196;&#22914;&#26524;&#36816;&#34892;&#36807;&#20102;&#23601;&#19981;&#24517;&#20877;&#36816;&#34892;&#65289;&#65292;&#26368;&#21518;&#28857;&#24320;`http://localhost:8000/examples/` &#21363;&#21487;&#65306;</span><br></pre></td></tr></table></figure></p>
+<p>$ npm install<br>$ npm start<br>```</p>
+<h3 id="API文档">API文档</h3><p>源码总体分4部分，分别为<code>graph</code>, <code>renderers</code>, <code>settings</code>和<code>controller</code>。<code>graph</code>是图的数据结构，定义了图的基本接口；<code>renderers</code>是渲染器，目前支持<code>webgl</code>, <code>canvas</code>和<code>svg</code>三种；<code>settings</code>是对图的显示设定，如节点大小、颜色、边的属性；<code>controller</code>将前面三者关联起来提供接口。更多详细内容请看官方文档：</p>
+<ul>
+<li><a href="https://github.com/jacomyal/sigma.js/wiki" target="_blank" rel="external">官方简介</a>;</li>
+<li><a href="https://github.com/jacomyal/sigma.js/wiki/Graph-API" target="_blank" rel="external">graph接口</a>；</li>
+<li><a href="https://github.com/jacomyal/sigma.js/wiki/Renderers" target="_blank" rel="external">Renderers文档</a>；</li>
+<li><a href="https://github.com/jacomyal/sigma.js/wiki/Settings" target="_blank" rel="external">Settings文档</a>;</li>
+<li><a href="https://github.com/jacomyal/sigma.js/wiki/Settings" target="_blank" rel="external">Controller接口</a>;</li>
+<li>问答（<a href="https://github.com/jacomyal/sigma.js/issues" target="_blank" rel="external">Q&amp;A</a>）</li>
+<li><a href="https://github.com/jacomyal/sigma.js/releases/" target="_blank" rel="external">sigma历史版本</a></li>
+</ul>
+<h3 id="可处理的数据格式">可处理的数据格式</h3><ul>
+<li><code>gexf</code>格式：实际为xml文件。该格式源于<a href="http://gephi.github.io" target="_blank" rel="external">Gephi</a>，它是开源的网络可视化与分析软件，以插件形式提供各式各样的基于图的算法；</li>
+<li><code>json</code>格式：该格式用于<code>Web客户端</code>与<code>服务器端</code>的数据交互。</li>
+</ul>
+<h3 id="Graph,_Node和Edge数据结构">Graph, Node和Edge数据结构</h3><p>官方文档中没有包含对数据结构的介绍，以下源码中有关数据结构的代码（从<a href="https://github.com/jacomyal/sigma.js/blob/master/plugins/sigma.parsers.gexf/gexf-parser.js" target="_blank" rel="external"><code>plugins/sigma.parsers.gexf/gexf.parser.js</code></a>中找的，<code>json</code>对应部分也有相似的内容）：</p>
+<ul>
+<li>Graph数据结构：<ul>
+<li>version: string</li>
+<li>mode: string</li>
+<li>defaultEdgeType: string</li>
+<li>meta: object {lastmodifieddate , …}</li>
+<li>model: object {node, edge}</li>
+<li>nodes: arry</li>
+<li>edges: arry</li>
+</ul>
+</li>
+<li>Node数据结构：  <ul>
+<li>id: string</li>
+<li>label: string</li>
+<li>viz: object {color, position, size, shape}</li>
+<li>attributes: map</li>
+</ul>
+</li>
+<li>Edge数据结构：  <ul>
+<li>id: string</li>
+<li>type: string</li>
+<li>label: string</li>
+<li>source: string</li>
+<li>target: string</li>
+<li>weight: number</li>
+<li>viz: object {color, shape, thickness}</li>
+<li>atrributes: map</li>
+</ul>
+</li>
+</ul>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+  <div class="tags">
+    <a class="tags-link" href="/blogs/tags/Graph/">Graph</a>, <a class="tags-link" href="/blogs/tags/JavaScript/">JavaScript</a>, <a class="tags-link" href="/blogs/tags/Network/">Network</a>, <a class="tags-link" href="/blogs/tags/Node-js/">Node.js</a>, <a class="tags-link" href="/blogs/tags/Sigma-js/">Sigma.js</a>
+  </div>
+
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">评论</h1>
+  <div class="ds-thread" data-title="使用Sigma.js库在Web页面画网络图">
+  </div>
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2015 <a href="http://kunsland.github.io">Kevin Lee</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://kunsland.github.io" target="_blank">Kevin Lee</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/blogs/js/scale.fix.js"></script>
+<script src="/blogs/js/jquery.imagesloaded.min.js"></script>
+<script src="/blogs/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'kevinlee' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/blogs/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/blogs/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

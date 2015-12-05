@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Things you should do immediately after you install Unbuntu | Kevin Lee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="Kevin Lee">
+  
+  
+    <meta name="description" content="前天晚上为了在我那破旧的Y450上装Windows 10和Ubuntu 14.04的双系统，折腾了两天。最后成功把Windows 10系统给装没了。总结原因主要是有两点，一是没有搞清楚如何在双硬盘（我的主硬盘是128G的SSD，光驱位置放的是原来320G的HDD）条件下给两个盘装两个系统，始终纠结于为何SSD上的启动器找不到HDD上的Ubuntu；二是没有搞清楚Ubuntu安装过程中的分区，导致操">
+  
+  <meta name="description" content="前天晚上为了在我那破旧的Y450上装Windows 10和Ubuntu 14.04的双系统，折腾了两天。最后成功把Windows 10系统给装没了。总结原因主要是有两点，一是没有搞清楚如何在双硬盘（我的主硬盘是128G的SSD，光驱位置放的是原来320G的HDD）条件下给两个盘装两个系统，始终纠结于为何SSD上的启动器找不到HDD上的Ubuntu；二是没有搞清楚Ubuntu安装过程中的分区，导致操">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Things you should do immediately after you install Unbuntu">
+<meta property="og:url" content="http://kunsland.github.io/blogs/2015/12/05/Things-you-should-do-immediately-after-you-install-Unbuntu/index.html">
+<meta property="og:site_name" content="Kevin Lee">
+<meta property="og:description" content="前天晚上为了在我那破旧的Y450上装Windows 10和Ubuntu 14.04的双系统，折腾了两天。最后成功把Windows 10系统给装没了。总结原因主要是有两点，一是没有搞清楚如何在双硬盘（我的主硬盘是128G的SSD，光驱位置放的是原来320G的HDD）条件下给两个盘装两个系统，始终纠结于为何SSD上的启动器找不到HDD上的Ubuntu；二是没有搞清楚Ubuntu安装过程中的分区，导致操">
+<meta property="og:updated_time" content="2015-12-05T06:08:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Things you should do immediately after you install Unbuntu">
+<meta name="twitter:description" content="前天晚上为了在我那破旧的Y450上装Windows 10和Ubuntu 14.04的双系统，折腾了两天。最后成功把Windows 10系统给装没了。总结原因主要是有两点，一是没有搞清楚如何在双硬盘（我的主硬盘是128G的SSD，光驱位置放的是原来320G的HDD）条件下给两个盘装两个系统，始终纠结于为何SSD上的启动器找不到HDD上的Ubuntu；二是没有搞清楚Ubuntu安装过程中的分区，导致操">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/blogs/favicon.ico">
+  
+  <link rel="stylesheet" href="/blogs/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/blogs/">Kevin Lee</a></h1>
+    <p><a href="/blogs/">Everything in the world is mutual connected.</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/blogs">Home</a></li>
+      
+        <li><a href="/blogs/archives">Archives</a></li>
+      
+        <li><a href="/">About</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/blogs/2015/12/05/Things-you-should-do-immediately-after-you-install-Unbuntu/">
+  <time datetime="2015-12-05T02:01:55.000Z">
+    Dec 5 2015
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Things you should do immediately after you install Unbuntu</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>前天晚上为了在我那破旧的Y450上装Windows 10和Ubuntu 14.04的双系统，折腾了两天。最后成功把Windows 10系统给装没了。总结原因主要是有两点，一是没有搞清楚如何在双硬盘（我的主硬盘是128G的SSD，光驱位置放的是原来320G的HDD）条件下给两个盘装两个系统，始终纠结于为何SSD上的启动器找不到HDD上的Ubuntu；二是没有搞清楚Ubuntu安装过程中的分区，导致操作失误，导致把整个SSD给格了，Windows 10也因此没了。思来想去，考虑到Y450的硬件老化问题，以及无意再去搞破解、授权之类的乱七八糟的东西，所以下定决心使用Ubuntu。</p>
+<a id="more"></a>
+<p>从Windows迁移到Ubuntu并不是简单的事情，虽然之前也有Ubuntu使用经验，但是都是短期的，好多问题在解决的时候都是从网上的博客复制粘贴的命令行，有太多不稳定、不规范的因素。这次决定从Windows迁移到Ubuntu，一条很重要的原则是一切以官方文档为准。所以那些乱七八糟的博客的命令行尽量避开。除此之外，Ubuntu必定有很多跟Windows不一样的体验，所以另一条原则是不装模拟Windows运行环境的部件和软件。</p>
+<p>在这两条原则下的迁移，主要是用户习惯和思维的转变。用户习惯主要是说从鼠标-图形界面操作过渡到命令行为主的操作；思维转变，主要是指摒弃在Windows系统下养成的各种陋习，搞破解、玩游戏、上qq等，由此转变为项目、任务为主、目标明确的高效学习和开发习惯。<br>下面以装完Ubuntu之后应该做的几件事为例，详细介绍这些原则和转变的体现。</p>
+<h1 id="更新系统">更新系统</h1><p>一般系统都会在发布之后，不断的打补丁，Ubuntu也不例外，即使是最新的系统。所以装完系统之后，第一件事是更新系统。更新的好处是去掉无用的库，添加新的库，为后面的软件安装排除故障。有几次在没更新系统的情况下装软件，出现了很多奇怪的Bug，更新系统后则没出现任何问题。<br>执行更新的命令很简单，分两步，首先是更新源（开源的系统的一大弊病就是源太多，而且各不相干，各自维护，不像Windows的更新源全由微软管理维护）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure></p>
+<p>这句话必须在add-apt-repository之后执行，以保证后续行为的正常进行。也就是说在Ubuntu下装软件的完整步骤为：添加源-&gt;更新源-&gt;下载并安装软件。有些时候你不用执行添加源和更新源，那是因为你在很早之前就已经执行了这些操作。<br>第二步，更新系统：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure></p>
+<h1 id="装Chrome浏览器">装Chrome浏览器</h1><p>Ubuntu下装Chrome比在Windows下装更容易，两步即可：下载软件包，双击安装。<br>下载x86版本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://dl.google.com/linux/direct/google-chrome-stable_current_i386.deb</span><br></pre></td></tr></table></figure></p>
+<p>下载x64版本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb</span><br></pre></td></tr></table></figure></p>
+<p>这里不用管具体的Chrome版本，因为stable_current就是“当前稳定版”的意思。<br>之所以装Chrome，是因为Chrome的书签管理、插件、审查元素等相关的用户习惯已经基本养成，不想再花时间在这些上面，Chrome的账户同步（包括插件和书签，以及一些基本设置）也是特别贴心。</p>
+<h1 id="OpenVPN">OpenVPN</h1><p>之前写过一片博文讲<a href="http://kunsland.github.io/blogs/2015/03/22/vps-openvpn/">如何使用VPS和OpenVPN进行翻墙</a>。这里就只讲客户端的安装，Ubuntu下安装OpenVPN不用翻墙，只需一个命令就行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openvpn</span><br></pre></td></tr></table></figure></p>
+<p>然后将客户端配置文件xxx.conf，根证书，账户证书和账户私钥这四个文件拷贝到<code>/etc/openvpn/</code>目录下。<br>启动openvpn服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service openvpn start</span><br></pre></td></tr></table></figure></p>
+<p>启动成功会在末尾行显示<code>Autostarting VPN &#39;xxxx&#39;</code>。<br>设置开机自启动：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/default/openvpn</span><br></pre></td></tr></table></figure></p>
+<p>根据该文件注释的前几行的介绍，自启动有两种方式设置:一是去掉<code>AUTOSTART=&quot;all&quot;</code>前的注释符号<code>#</code>；二是添加一行<code>AUTOSTART=&quot;xxx&quot;</code>，这里xxx需要替换为你的.conf文件名，不加文件后缀。</p>
+<h1 id="远程软件Remmina">远程软件Remmina</h1><p>Ubuntu自带Remmina，但是在远程时不能远程声音，所以要对Remmina进行更新，可以参见<a href="https://github.com/FreeRDP/Remmina/wiki" target="_blank" rel="external">官方Wiki</a>。<br>具体操作如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-add-repository ppa:remmina-ppa-team/remmina-next&#10;sudo apt-get update&#10;sudo apt-get install remmina remmina-plugin-rdp libfreerdp-plugins-standard</span><br></pre></td></tr></table></figure></p>
+<h1 id="Ubuntu下的中文输入法">Ubuntu下的中文输入法</h1><p>我使用Ubuntu的还有一条原则是英文优先，所以系统的所有提示都是英文显示。但工作生活中免不了要使用中文，所以需要装中文输入法。选来选取最后还是用了搜狗输入法。比较好的是搜狗输入法有专门的<a href="http://pinyin.sogou.com/linux/" target="_blank" rel="external">Linux版本</a>，并且还在更新当中。不过安装过程稍微有些折腾。首先是从官网下载deb安装包，双击即可安装。但是安装完之后还需要一定配置才能使用。</p>
+<ul>
+<li>在将键盘输入法的系统从iBus改为fcitx（Language Support-&gt;Language-&gt;Keyboard input method system）</li>
+<li>安装中文语言（Install/Remove Languages，勾选Chinese(Simplified)）</li>
+<li>将Language for menus and windows中的<code>汉语(中国)</code>拖到第一的位置（覆盖掉第一个），并应用到整个系统（Apply System-Wide）</li>
+<li>重启系统，配置文本输入（Text Entry）添加搜狗拼音输入法</li>
+</ul>
+<p>如果你不喜欢英文界面的系统，就到此为止了；如果你喜欢英文界面的系统，就将Language for menus and windows中的<code>汉语(中国)</code>拖到末尾并应用到整个系统即可。</p>
+<p>搜狗输入法会在某些时候失效，不起作用，比如在Emacs中不仅不起作用，而且切换快捷键跟Emacs的快捷键起冲突。解决办法：<br>安装zh_CN.utf8字符集：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg-reconfigure locales</span><br></pre></td></tr></table></figure></p>
+<p>接着设置LC_CTYPE=”zh_CN.UTF-8”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/default/locale</span><br></pre></td></tr></table></figure></p>
+<p>这样配置可以解决搜狗输入法在Emacs中失效和热键冲突两个问题。</p>
+<h1 id="Node-js">Node.js</h1><p>推荐如下安装方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nodejs&#10;sudo apt-get install npm&#10;ln -s /usr/bin/nodejs /usr/bin/node</span><br></pre></td></tr></table></figure></p>
+<h1 id="git">git</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git&#10;git config --global user.name=&#34;xxx&#34;&#10;git config --global user.email=&#34;xx@ss.yy.com&#34;&#10;ssh-keygen -t rsa -b 4096 -C &#34;xx@ss.yy.com&#34;</span><br></pre></td></tr></table></figure>
+<p>更多查看<a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration" target="_blank" rel="external">git官方文档</a>以及<a href="https://help.github.com/articles/generating-ssh-keys/" target="_blank" rel="external">github官方文档</a>。</p>
+<h1 id="Emacs">Emacs</h1><p>准备工作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential&#10;sudo apt-get build-dep emacs24</span><br></pre></td></tr></table></figure></p>
+<p>从<a href="http://gnu.mirror.iweb.com/emacs/" target="_blank" rel="external">Emacs官网</a>下载源码并解压，进入解压后的目录执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure&#10;make&#10;sudo make install</span><br></pre></td></tr></table></figure></p>
+<p>创建启动器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /usr/share/applications/Emacs.desktop</span><br></pre></td></tr></table></figure></p>
+<p>文本中添加如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Desktop Entry]&#10;Version=1.0&#10;Name=Emacs-24&#10;Exec=env UBUNTU_MENUPROXY=0 /usr/local/bin/emacs&#10;Terminal=false&#10;Icon=emacs&#10;Type=Application&#10;Categories=IDE&#10;X-Ayatana-Desktop-Shortcuts=NewWindow&#10;[NewWindow Shortcut Group]&#10;Name=New Window&#10;TargetEnvironment=Unity</span><br></pre></td></tr></table></figure></p>
+<p>Emacs使用说明书，参见<a href="http://www.gnu.org/software/emacs/manual/emacs.html" target="_blank" rel="external">Emacs官网</a>。</p>
+<h1 id="Latex">Latex</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install texlive-full</span><br></pre></td></tr></table></figure>
+<p><a href="https://latex-project.org" target="_blank" rel="external">LaTex官网</a>，<a href="http://www.andy-roberts.net/misc/latex/" target="_blank" rel="external">入门指导</a>。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+  <div class="tags">
+    <a class="tags-link" href="/blogs/tags/Ubuntu/">Ubuntu</a>
+  </div>
+
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">评论</h1>
+  <div class="ds-thread" data-title="Things you should do immediately after you install Unbuntu">
+  </div>
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2015 <a href="http://kunsland.github.io">Kevin Lee</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://kunsland.github.io" target="_blank">Kevin Lee</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/blogs/js/scale.fix.js"></script>
+<script src="/blogs/js/jquery.imagesloaded.min.js"></script>
+<script src="/blogs/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'kevinlee' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/blogs/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/blogs/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

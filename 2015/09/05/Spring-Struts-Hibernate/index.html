@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Spring Struts Hibernate | Kevin Lee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="Kevin Lee">
+  
+  
+    <meta name="description" content="最近遇到一个比较棘手的有关Web服务器的性能问题，概括起来就是大规模并发数据库异步查询请求的高效性问题。由于项目时间有限，所以采取缓存查询结果的方式提高响应速度，但是仍然不能解决首次查询所带来的时间消耗。倘若某个耗时查询正在执行中，还存在新的相同请求该如何处理的问题。重复造轮子并不是很好的解决办法，看看Java中是如何解决这些问题的，这里以流行的Spring Struts Hibernate(SS">
+  
+  <meta name="description" content="最近遇到一个比较棘手的有关Web服务器的性能问题，概括起来就是大规模并发数据库异步查询请求的高效性问题。由于项目时间有限，所以采取缓存查询结果的方式提高响应速度，但是仍然不能解决首次查询所带来的时间消耗。倘若某个耗时查询正在执行中，还存在新的相同请求该如何处理的问题。重复造轮子并不是很好的解决办法，看看Java中是如何解决这些问题的，这里以流行的Spring Struts Hibernate(SS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Struts Hibernate">
+<meta property="og:url" content="http://kunsland.github.io/blogs/2015/09/05/Spring-Struts-Hibernate/index.html">
+<meta property="og:site_name" content="Kevin Lee">
+<meta property="og:description" content="最近遇到一个比较棘手的有关Web服务器的性能问题，概括起来就是大规模并发数据库异步查询请求的高效性问题。由于项目时间有限，所以采取缓存查询结果的方式提高响应速度，但是仍然不能解决首次查询所带来的时间消耗。倘若某个耗时查询正在执行中，还存在新的相同请求该如何处理的问题。重复造轮子并不是很好的解决办法，看看Java中是如何解决这些问题的，这里以流行的Spring Struts Hibernate(SS">
+<meta property="og:updated_time" content="2015-12-04T04:21:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Struts Hibernate">
+<meta name="twitter:description" content="最近遇到一个比较棘手的有关Web服务器的性能问题，概括起来就是大规模并发数据库异步查询请求的高效性问题。由于项目时间有限，所以采取缓存查询结果的方式提高响应速度，但是仍然不能解决首次查询所带来的时间消耗。倘若某个耗时查询正在执行中，还存在新的相同请求该如何处理的问题。重复造轮子并不是很好的解决办法，看看Java中是如何解决这些问题的，这里以流行的Spring Struts Hibernate(SS">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/blogs/favicon.ico">
+  
+  <link rel="stylesheet" href="/blogs/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/blogs/">Kevin Lee</a></h1>
+    <p><a href="/blogs/">Everything in the world is mutual connected.</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/blogs">Home</a></li>
+      
+        <li><a href="/blogs/archives">Archives</a></li>
+      
+        <li><a href="/">About</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/blogs/2015/09/05/Spring-Struts-Hibernate/">
+  <time datetime="2015-09-05T06:26:38.000Z">
+    Sep 5 2015
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Spring Struts Hibernate</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>最近遇到一个比较棘手的有关Web服务器的性能问题，概括起来就是大规模并发数据库异步查询请求的高效性问题。由于项目时间有限，所以采取缓存查询结果的方式提高响应速度，但是仍然不能解决首次查询所带来的时间消耗。倘若某个耗时查询正在执行中，还存在新的相同请求该如何处理的问题。重复造轮子并不是很好的解决办法，看看Java中是如何解决这些问题的，这里以流行的Spring Struts Hibernate(SSH)为例。</p>
+<a id="more"></a>
+<h3 id="Overview">Overview</h3><p>SSH是一套非常流行的Java Web集成开发框架，注意是一套集成框架，而非一个框架，包含三个框架，搭配使用以开发高并发、高性能的企业级Web应用。</p>
+<h3 id="Spring">Spring</h3><ul>
+<li>定义：Java平台的应用框架和反转控制容器（参见<a href="https://en.wikipedia.org/wiki/Spring_Framework" target="_blank" rel="external">维基</a>）。</li>
+<li>范围：任何Java应用（不限于Web应用）。</li>
+<li>核心一：反转控制（Inverse of Controll, IoC）/依赖注入（Dependency Injection, DI），（参见<a href="http://martinfowler.com/articles/injection.html" target="_blank" rel="external">Martin Fowler</a>）。</li>
+<li>核心二：面向切面编程（Aspect Oriented Programming, AOP）。</li>
+<li>文档：参见<a href="http://docs.spring.io/spring-framework/docs/current/spring-framework-reference/html/" target="_blank" rel="external">Spring Framework Reference Documentation</a>。</li>
+</ul>
+<h3 id="Struts">Struts</h3><ul>
+<li>定义：Apache旗下的、免费的、开源的Java Web应用开发MVC框架。</li>
+<li>范围：Java Web应用。</li>
+<li>核心：HTTP, Java Application Frameworks, JavaScript, AJAX, SOAP, Servlets, JSP, XML, JAAS, …</li>
+<li>文档：参见<a href="https://struts.apache.org" target="_blank" rel="external">Apache Struts</a></li>
+</ul>
+<h3 id="Hibernate">Hibernate</h3><p>这才是我要找的。</p>
+<ul>
+<li>定义：针对Java语言的对象关系映射（Object-Relational Mapping, ORM）框架。</li>
+<li>范围：Java与数据库。</li>
+<li>文档：参见<a href="http://hibernate.org/" target="_blank" rel="external">Hibernate. Everything data.</a>。</li>
+</ul>
+<h3 id="Java_Reflection">Java Reflection</h3><p>这是Java非常重要的特性，它在一定程度上能突破Java的安全机制，使得程序能够动态加载组件（或类），检查、审查并且操控程序的内部属性，广泛应用于JavaBean相关（JSP, DI, AOP）的设计开发中。</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+  <div class="tags">
+    <a class="tags-link" href="/blogs/tags/AOP/">AOP</a>, <a class="tags-link" href="/blogs/tags/Hibernate/">Hibernate</a>, <a class="tags-link" href="/blogs/tags/IoC/">IoC</a>, <a class="tags-link" href="/blogs/tags/Java/">Java</a>, <a class="tags-link" href="/blogs/tags/MVC/">MVC</a>, <a class="tags-link" href="/blogs/tags/ORM/">ORM</a>, <a class="tags-link" href="/blogs/tags/Spring/">Spring</a>, <a class="tags-link" href="/blogs/tags/Struts/">Struts</a>
+  </div>
+
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">评论</h1>
+  <div class="ds-thread" data-title="Spring Struts Hibernate">
+  </div>
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2015 <a href="http://kunsland.github.io">Kevin Lee</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://kunsland.github.io" target="_blank">Kevin Lee</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/blogs/js/scale.fix.js"></script>
+<script src="/blogs/js/jquery.imagesloaded.min.js"></script>
+<script src="/blogs/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'kevinlee' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/blogs/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/blogs/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

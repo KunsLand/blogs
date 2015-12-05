@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Java Virtual Machine | Kevin Lee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="Kevin Lee">
+  
+  
+    <meta name="description" content="上图为JVM框架，图片来源：Inside the Java 2 Virtual Machine 2nd Edition">
+  
+  <meta name="description" content="上图为JVM框架，图片来源：Inside the Java 2 Virtual Machine 2nd Edition">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Virtual Machine">
+<meta property="og:url" content="http://kunsland.github.io/blogs/2015/05/01/about-jvm/index.html">
+<meta property="og:site_name" content="Kevin Lee">
+<meta property="og:description" content="上图为JVM框架，图片来源：Inside the Java 2 Virtual Machine 2nd Edition">
+<meta property="og:image" content="http://kunsland.github.io/blogs/blogs/img/about-jvm-architecture.jpg">
+<meta property="og:image" content="http://kunsland.github.io/blogs/blogs/img/about-jvm-method-area-heap.jpg">
+<meta property="og:image" content="http://kunsland.github.io/blogs/blogs/img/about-jvm-pc-stack-native-method-stack-relations.jpg">
+<meta property="og:image" content="http://kunsland.github.io/blogs/blogs/img/about-jvm-invokes-java-and-native-methods.jpg">
+<meta property="og:image" content="http://kunsland.github.io/blogs/blogs/img/about-jvm-gc-tuning.png">
+<meta property="og:image" content="http://kunsland.github.io/blogs/blogs/img/about-jvm-architecture-with-gc.png">
+<meta property="og:updated_time" content="2015-12-04T04:21:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Virtual Machine">
+<meta name="twitter:description" content="上图为JVM框架，图片来源：Inside the Java 2 Virtual Machine 2nd Edition">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/blogs/favicon.ico">
+  
+  <link rel="stylesheet" href="/blogs/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/blogs/">Kevin Lee</a></h1>
+    <p><a href="/blogs/">Everything in the world is mutual connected.</a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/blogs">Home</a></li>
+      
+        <li><a href="/blogs/archives">Archives</a></li>
+      
+        <li><a href="/">About</a></li>
+      
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/blogs/2015/05/01/about-jvm/">
+  <time datetime="2015-05-01T05:44:09.000Z">
+    May 1 2015
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Java Virtual Machine</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p><img src="/blogs/img/about-jvm-architecture.jpg" alt="The internal architecture of the Java virtual machine."><br>上图为JVM框架，图片来源：<a href="http://www.artima.com/insidejvm/ed2/jvm2.html" target="_blank" rel="external">Inside the Java 2 Virtual Machine 2nd Edition</a></p>
+<a id="more"></a>
+<p>虽然这<em>Inside the Java 2 Virtual Machine 2nd Edition</em>本书(<a href="http://mihaimoldovan.com/download/Inside-Java-Virtual-Machine.pdf" target="_blank" rel="external">PDF</a>)是在2000年6月出版的，已经很古老了，但从其给出的JVM结构图来看，JVM整体框架在这15年里几乎没有任何变化。维基百科给出的基于Java SE 7 Edition的<a href="http://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/JvmSpec7.png/400px-JvmSpec7.png" target="_blank" rel="external">JVM框架</a>几乎与这个一模一样。<a href="https://anturis.com/blog/java-virtual-machine-the-essential-guide/" target="_blank" rel="external">最新消息</a>称JVM已将方法区(Method Area)移除了，将其放在了操作系统层面。单从官方给出的JVM说明<a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.4" target="_blank" rel="external">文档</a>来看，并未移除该部分的内容，也许消息发布者是针对某一个具体的JVM实现来说的。</p>
+<p>抛开年代，就其内容来说，该书主要从设计文档(the abstract specification)、具体实现(a concrete implementation)和运行实例(a runtime instance)三个角度来讲述JVM，并且涉及操作系统、编译等知识，讲得很透彻。</p>
+<p>之所以要看JVM相关的东西，主要是听周围的人都在谈论这个东西，所以想一探究竟。我结合自身需求，主要看了本书的第5、8、9、20章，主要浏览了Java虚拟机的框架、类加载器、垃圾回收和线程同步的内容。</p>
+<h1 id="Java_Virtual_Machine">Java Virtual Machine</h1><p>从框架设计来看，JVM总体有5部分内容：</p>
+<ul>
+<li>类加载器子系统：启动类加载器(bootstrap)、用户自定义加载器等</li>
+<li>运行时数据区</li>
+<li>执行引擎：解释执行、即时(Just-In-Time)编译、Java线程模型等</li>
+<li>本地方法接口：JNI等</li>
+<li>本地方法库</li>
+</ul>
+<p>运行时数据区又分为5部分：</p>
+<ul>
+<li>方法区(method area)：类型信息、常量等</li>
+<li>堆(heap)：只放对象和数组</li>
+<li>栈(Java Stacks)：各线程的方法栈等，一般称为Java虚拟机栈</li>
+<li>程序计数器(PC registers)：各线程的下一条执行语句</li>
+<li>本地方法栈(native method stacks)：非Java语言方法栈</li>
+</ul>
+<p><img src="/blogs/img/about-jvm-method-area-heap.jpg" alt="Method Area V.S. Heap"><br>上图为JVM中方法区与堆区的区别，图片来源：<a href="http://www.artima.com/insidejvm/ed2/jvm2.html" target="_blank" rel="external">Inside the Java 2 Virtual Machine 2nd Edition</a></p>
+<p><img src="/blogs/img/about-jvm-pc-stack-native-method-stack-relations.jpg" alt="Relations between PC Registers, Java Stacks and Native Method Stacks"><br>上图为JVM中程序计数器、Java虚拟机栈、本地方法栈之间的关系，图片来源：<a href="http://www.artima.com/insidejvm/ed2/jvm2.html" target="_blank" rel="external">Inside the Java 2 Virtual Machine 2nd Edition</a></p>
+<p><img src="/blogs/img/about-jvm-invokes-java-and-native-methods.jpg" alt="Invoke Java and Native Methods in JVM"><br>上图为JVM中调用Java方法与本地方法之间的区别与联系，图片来源：<a href="http://www.artima.com/insidejvm/ed2/jvm9.html" target="_blank" rel="external">Inside the Java 2 Virtual Machine 2nd Edition</a></p>
+<h1 id="Garbage_Collection">Garbage Collection</h1><p><img src="/blogs/img/about-jvm-gc-tuning.png" alt="GC Tuning in JVM"><br>图片来源<a href="http://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html" target="_blank" rel="external">Java SE 6 GC Tuning</a>，未找到Java 7相关的资料，官方只有简单的<a href="http://docs.oracle.com/javase/7/docs/technotes/guides/vm/" target="_blank" rel="external">介绍</a>。<br>垃圾回收是针对堆和方法区来讲的，主要思想是：内存快用完了，清除那些没用的对象吧。回收的算法有很多种，如（以下方法来自<a href="http://www.artima.com/insidejvm/ed2/jvm9.html" target="_blank" rel="external">Inside the Java 2 Virtual Machine 2nd Edition</a>）：</p>
+<ul>
+<li>引用计数法</li>
+<li>轨迹跟踪法</li>
+<li>压缩拷贝法</li>
+<li>停止-拷贝法：Thinking in Java中提到的方法，比较流行，缺点是清理时所有线程（除了清理垃圾的GC线程）都得停止运行</li>
+<li>自适应法</li>
+<li>火车法</li>
+</ul>
+<p>不同的JVM实现可能会采用不同的方法，下图是一种流行的停止-拷贝法，对堆区的整理方式分三个层级，详细参阅<a href="http://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html" target="_blank" rel="external">Java SE 6 GC Tuning</a>或<a href="http://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/index.html" target="_blank" rel="external">Java SE 8 GC Tuning</a>：</p>
+<ul>
+<li>Eden Pool是新生代，满了之后将垃圾清空留下来的存入Survivor Pool存活区</li>
+<li>Survivor Pool是存活区，每次有新的对象进入，原有的存活对象年龄加1，满了之后将年龄超过一定限度的放入Tenured Pool终身存活区。</li>
+<li>Tenured Pool终身存活区，满了之后运行GC清空无用对象。</li>
+</ul>
+<p>需要注意的是方法区虽是永久代，但并不代表不被清理，它只是相对堆区更为稳定而已，满了之后同样由GC线程清理。</p>
+<p><img src="/blogs/img/about-jvm-architecture-with-gc.png" alt="A Popular GC Implementation"><br>上图为一种流行的GC实现方式，图片来源<a href="https://anturis.com/blog/java-virtual-machine-the-essential-guide/" target="_blank" rel="external">Java虚拟机：基本指南</a></p>
+<h1 id="同步与协作">同步与协作</h1><p>JVM中堆和方法区被所有线程共享的，为保证数据同步和多线程之间的协作，JVM提供了一种机制叫做monitor。<br>对象锁：JVM中monitor的实际实现形式，就是对象锁，JVM中的锁都是对象锁。<br>类锁：实际上是以对象锁的形式实现的，因为JVM在加载一个类文件时会创建一个java.lang.Class实例，对一个类加锁时，实际上是对那个类的Class实例对象加锁。</p>
+<h1 id="监控JVM">监控JVM</h1><p><a href="https://anturis.com/jvm-monitoring/" target="_blank" rel="external">Anturis Console-JVM monitoring</a></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+  <div class="tags">
+    <a class="tags-link" href="/blogs/tags/JVM/">JVM</a>, <a class="tags-link" href="/blogs/tags/Java/">Java</a>
+  </div>
+
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">评论</h1>
+  <div class="ds-thread" data-title="Java Virtual Machine">
+  </div>
+</section>
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2015 <a href="http://kunsland.github.io">Kevin Lee</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://kunsland.github.io" target="_blank">Kevin Lee</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/blogs/js/scale.fix.js"></script>
+<script src="/blogs/js/jquery.imagesloaded.min.js"></script>
+<script src="/blogs/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'kevinlee' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="/blogs/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/blogs/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>
